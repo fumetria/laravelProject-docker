@@ -41,5 +41,22 @@ Una vez tengamos añadido nuestros datos procederemos a convertirlo en nuestro a
 ```bash
 cp .env.docker.example .env
 ```
-
 Con este archivo *.env*, nuestro *docker-compose* cogera los datos para las variables que tenemos dentro.
+
+Ahora vamos a crear nuestro archivo *.env* para nuestro proyecto laravel.
+```bash
+cd Aplication/
+cp .env.project.example src/.env
+```
+Modificaremos los datos relacionados con nuestra base de datos y para que coincidan con nuestro archivo *.env* de nuestro contenedor de Docker,
+```bash
+DB_CONNECTION=mysql
+DB_HOST=database
+DB_PORT=3306
+DB_DATABASE=library_db
+DB_USERNAME=your_user
+DB_PASSWORD=your_password
+```
+
+### Arrancar contenedor en Docker
+
