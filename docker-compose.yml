@@ -8,7 +8,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
-      - ${MYSQL_PORT}
+      - ${MYSQL_PORT}:${MYSQL_PORT}
     volumes:
       - db_volume:/var/lib/mysql
     networks:
@@ -18,7 +18,7 @@ services:
     build:
       context: ./Aplication
     ports:
-      - ${APP_PORT}
+      - ${APP_PORT}:${APP_PORT}
     environment:
       DB_HOST: ${MYSQL_HOST}
       DB_NAME: ${MYSQL_DATABASE}
@@ -28,7 +28,7 @@ services:
       - app-network
     depends_on:
       - database
-    command: [ "php", "artisan", "serve", "--host=0.0.0.0", "--port=6300" ]
+    command: [ "php", "artisan", "serve", "--host=0.0.0.0", "--port=${APP_PORT}" ]
   
   adminMySQL_contenidor:
     image: phpmyadmin/phpmyadmin
