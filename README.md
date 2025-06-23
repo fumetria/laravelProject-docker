@@ -60,3 +60,8 @@ DB_PASSWORD=your_password
 
 ### Arrancar contenedor en Docker
 
+Para arrancar nuestro contenedor ejecutaremos el siguiente comando:
+
+```bash
+docker-compose up
+```
