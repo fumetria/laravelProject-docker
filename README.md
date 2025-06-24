@@ -65,3 +65,58 @@ Para arrancar nuestro contenedor ejecutaremos el siguiente comando:
 ```bash
 docker-compose up
 ```
+
+#### Componentes
+
+Nuestro contenedor de Docker se compone de varias partes, empezando por nuestro *docker-compose.yml*:
+```yml
+services:
+  database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - db_volume:/var/lib/mysql
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: ./Aplication
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    environment:
+      DB_HOST: ${MYSQL_HOST}
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - app-network
+    depends_on:
+      - database
+    command: [ "php", "artisan", "serve", "--host=0.0.0.0", "--port=${APP_PORT}" ]
+  
+  adminMySQL_contenidor:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - database
+    ports:
+      - "9200:80"
+    environment:
+      PMA_HOST: ${MYSQL_HOST}
+    networks:
+      - app-network
+
+volumes:
+  db_volume:
+
+networks:
+  app-network:
+    driver: bridge
+```
