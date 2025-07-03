@@ -25,7 +25,7 @@ git clone https://github.com/fumetria/laravelProject.git /src
 
 Ahora, volvemos a nuestra directorio raíz para modificar *.env.docker.example* donde introduciremos los datos de las variables de nuestro servicio de *mysql*:
 
-```bash
+```Dotenv
 MYSQL_ROOT_USER=root
 MYSQL_ROOT_PASSWORD=example_password
 MYSQL_HOST=database
@@ -49,7 +49,7 @@ cd Aplication/
 cp .env.project.example src/.env
 ```
 Modificaremos los datos relacionados con nuestra base de datos y para que coincidan con nuestro archivo *.env* de nuestro contenedor de Docker,
-```bash
+```Dotenv
 DB_CONNECTION=mysql
 DB_HOST=database
 DB_PORT=3306
