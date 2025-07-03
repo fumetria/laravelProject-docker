@@ -122,7 +122,7 @@ networks:
 ```
 Dentro de Aplication tenemos nuestro Dockerfile que construirá nuestra aplicación de Laravel:
 
-```dockerfile
+```Dockerfile
 
 FROM php:8.4-alpine
 
@@ -157,10 +157,17 @@ until nc -z database 3306; do
   sleep 2
 done
 
-php artisan migrate:fresh --seed
+#Eliminar estas lineas si no queremos poblar la base de datos
+php artisan migrate --seed
 php artisan storage:link
+#------------------------------------------------------------
+
 cp -r public/img/covers/ storage/app/public/covers/
 cp -r public/img/authors/ storage/app/public/authors/
 
 php artisan serve --host=0.0.0.0 --port=8000
 ```
+
+En este script, mediante el comando *nc* de netcat, escuchamos el puerto de nuestra base de datos hasta que nos de conexión, una vez conectado, activamos nuestra aplicación.
+
+
